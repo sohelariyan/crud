@@ -1,3 +1,41 @@
+!-- database connection code -->
+<?php 
+
+	ob_start();
+
+	$db = mysqli_connect('localhost', 'root', '', 'user_managment');
+	if($db){
+		// echo 'database connection established!';
+	}else{
+		echo 'database connection error!';
+	}
+?>
+
+<!-- insert code -->
+<?php 
+
+	$error_msg = '';
+
+	if(isset($_POST['saveinfo'])){
+		$name 		= $_POST['username'];
+		$email 		= $_POST['email'];
+		$pass 		= $_POST['password'];
+
+		$upass = sha1($pass);
+
+		$sql2 = "INSERT INTO users(name,email,pass) VALUES ('$name', '$email', '$upass')";
+		$res2 = mysqli_query($db,$sql2);
+
+		if($res2){
+			header('Location: index.php');
+		}else{
+			//echo 'value insert error!';
+		}
+		
+	}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -109,40 +147,7 @@
 				  </thead>
 
 				<tbody>
-					<tr>
-						<th scope= "row">1</th>
-						<td> Sohel</td>
-						<td>Sohelariyan@gmail.com</td>
-						<td>Admin </td>
-						<td>Active</td>
-						<td>
-							<a href="" class="badge bg-success">Edit</td>
-							<a href="" class="badge bg-danger">Delete</td>
-					     </td>
-					</tr>
-					<tr>
-						<th scope= "row">2</th>
-						<td>Arif</td>
-						<td>Sohelariyan13@gmail.com</td>
-						<td>Admin </td>
-						<td>Active</td>
-						<td>
-							<a href="" class="badge bg-success">Edit</td>
-							<a href="" class="badge bg-danger">Delete</td>
-					     </td>
-					</tr>
-					<tr>
-						<th scope= "row">3</th>
-						<td>Rakib</td>
-						<td>Sohelariyan12@gmail.com</td>
-						<td>Admin </td>
-						<td>Active</td>
-						<td>
-							<a href="" class="badge bg-success">Edit</td>
-							<a href="" class="badge bg-danger">Delete</td>
-					     </td>
-					</tr>
-
+					
 					<?php 
 
 						$sql = "SELECT * FROM users";
